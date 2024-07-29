@@ -1,3 +1,6 @@
+# Project plan
+[Trello board](https://trello.com/b/VCB26Kve/team-body-makers-bnb)
+
 ## Acebook MERN Template
 
 In this project, you are task with working on an existing application. A
