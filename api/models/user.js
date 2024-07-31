@@ -26,7 +26,13 @@ UserSchema.pre('save', function(next) {
       next();
     });
   });
+
 });
+
+// comparePassword method to use in authentication
+UserSchema.methods.comparePassword = function(passwordToCompare) {
+  return bcrypt.compare(passwordToCompare, this.password);
+}
 
 const User = mongoose.model("User", UserSchema);
 
