@@ -38,7 +38,7 @@ export const FeedPage = () => {
       <br></br>
       <div className="feed" role="feed">
         {posts.map((post) => (
-          <Post post={post} key={post._id} filepath={sampleimage} />
+          <Post post={post} key={post._id} filepath={sampleimage}/>
         ))}
       </div>
     </>
