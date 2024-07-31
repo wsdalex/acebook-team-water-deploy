@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import sampleimage from "../../assets/image.png";
+import GlobalNavBar from "../../components/Post/GlobalNavBar";
+
 
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
@@ -31,10 +34,11 @@ export const FeedPage = () => {
 
   return (
     <>
-      <h2>Posts</h2>
+      <GlobalNavBar></GlobalNavBar>
+      <br></br>
       <div className="feed" role="feed">
         {posts.map((post) => (
-          <Post post={post} key={post._id} />
+          <Post post={post} key={post._id} filepath={sampleimage}/>
         ))}
       </div>
     </>
