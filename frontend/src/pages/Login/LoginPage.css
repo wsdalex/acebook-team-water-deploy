@@ -1,42 +1,60 @@
+h2 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+#instructions {
+    font-family: monospace;
+    font-size: 15px;
+    margin-top: 120px;
+}
 
 /* Container for each label-input pair */
 .label-input-container {
     display: flex;
     align-items: center;
-    margin: 8px 0;
-  }
-  
-  /* Style for the labels */
-  .label-input-container label {
+    margin: 15px 0;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+/* Style for the labels */
+.label-input-container label {
     width: 30%; /* Adjust this width as needed */
     margin-right: 20px; /* Space between label and input */
     text-align: right;
     margin-left: 10px;
-  }
-  
-  /* Adjust the input styles */
-  input[type=text], input[type=password] {
+    
+}
+
+/* Adjust the input styles */
+input[type=text], input[type=password] {
     flex: 1;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #f2f0f0;
-    box-sizing: border-box;
-  }
+    border: 1px solid #060505;
+    box-sizing: border-box; 
+    margin-right: 10px;
+    
+}
   
   /* Other styles remain unchanged */
   form {
     border: 2px solid #0c0a0a;
     border-radius: 20px; /* rounded corners with a radius of 15px */
-    margin: 200px; /* margin for spacing */
+    margin: 12px; /* margin for spacing */
     background-color: #eeebeb; /* light gray background */
   }
+  
   
   #submit {
     display: inline-block;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
+    font-family: monospace;
     color: #fff;
     background-color: #2578d0;
     border-style: outset;

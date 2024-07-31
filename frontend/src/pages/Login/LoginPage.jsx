@@ -33,9 +33,10 @@ export const LoginPage = () => {
   return (
     <>
       <h2>Login</h2>
+      <div id="instructions">Enter your login details:</div>
       <form onSubmit={handleSubmit}>
         <div className="label-input-container">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">Email</label>
           <input
             id="email"
             type="text"
@@ -44,7 +45,7 @@ export const LoginPage = () => {
           />
         </div>
         <div className="label-input-container">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Password</label>
           <input
             id="password"
             type="password"
