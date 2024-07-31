@@ -22,14 +22,14 @@ export const login = async (email, password) => {
     let data = await response.json();
     return data.token;
   } else {
-    throw new Error(
-      `Received status ${response.status} when logging in. Expected 201`
-    );
+    const errorData = await response.json();
+    throw new Error(errorData.message || `Received status ${response.status} when logging in. Expected 201`);
   }
 };
 
-export const signup = async (email, password) => {
+export const signup = async (name, email, password) => {
   const payload = {
+    name: name,
     email: email,
     password: password,
   };
