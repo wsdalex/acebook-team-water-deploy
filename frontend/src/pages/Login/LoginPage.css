@@ -1,0 +1,93 @@
+
+/* Container for each label-input pair */
+.label-input-container {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+  }
+  
+  /* Style for the labels */
+  .label-input-container label {
+    width: 30%; /* Adjust this width as needed */
+    margin-right: 20px; /* Space between label and input */
+    text-align: right;
+    margin-left: 10px;
+  }
+  
+  /* Adjust the input styles */
+  input[type=text], input[type=password] {
+    flex: 1;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #f2f0f0;
+    box-sizing: border-box;
+  }
+  
+  /* Other styles remain unchanged */
+  form {
+    border: 2px solid #0c0a0a;
+    border-radius: 20px; /* rounded corners with a radius of 15px */
+    margin: 200px; /* margin for spacing */
+    background-color: #eeebeb; /* light gray background */
+  }
+  
+  #submit {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2578d0;
+    border-style: outset;
+    border-color: #020405;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  #submit:hover {
+    background-color: #0c417a;
+  }
+  
+  #submit:active {
+    background-color: #004494;
+  }
+  
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+  .imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+  }
+  
+  img.avatar {
+    width: 40%;
+    border-radius: 50%;
+  }
+  
+  .container {
+    padding: 16px;
+  }
+  
+  span.psw {
+    float: right;
+    padding-top: 16px;
+  }
+  
+  @media screen and (max-width: 300px) {
+    span.psw {
+      display: block;
+      float: none;
+    }
+    .cancelbtn {
+      width: 100%;
+    }
+  }
