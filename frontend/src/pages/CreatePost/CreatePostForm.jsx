@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../services/posts";
+import GlobalNavBar from "../../components/Post/GlobalNavBar";
 
 export const CreatePostForm = () => {
     const [message, setMessage] = useState("");
@@ -32,6 +33,7 @@ export const CreatePostForm = () => {
 
     return (
         <>
+        <GlobalNavBar />
             <h2>Create Post</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor='message'>Message:</label>
