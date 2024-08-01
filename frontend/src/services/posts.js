@@ -19,21 +19,21 @@ export const getPosts = async (token) => {
   return data;
 };
 
-export const createPost = async (token, message) => {
+export const createPost = async (token, message, imageUrl) => {
   console.log("token being used ->", token);
   const requestOptions = {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ message }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ message, imageUrl }),
   };
 
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
 
   if (response.status !== 201) {
-      throw new Error("Unable to create post");
+    throw new Error("Unable to create post");
   }
 
   const data = await response.json();
