@@ -13,7 +13,10 @@ export const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = await login(email, password);
+      const session = await login(email, password);
+      const token = session.token;
+      const user = session.user;
+      localStorage.setItem("user", user);
       localStorage.setItem("token", token);
       navigate("/posts");
     } catch (err) {
