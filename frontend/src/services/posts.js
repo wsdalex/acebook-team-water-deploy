@@ -16,10 +16,5 @@ export const getPosts = async (token) => {
   }
 
   const data = await response.json();
-  if (data === null) {
-    const NoPostsMessage = "No posts to display"
-    return ;
-  } else {
-    return data;
-  }
+  return data;
 };
