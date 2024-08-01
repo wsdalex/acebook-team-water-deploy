@@ -11,7 +11,8 @@ export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [noPostsMessage, setnoPostsMessage] = useState("");
-  const user_name = localStorage.getItem("user").name;
+  const user = localStorage.getItem("user");
+  const user_name = JSON.parse(user).name
 
   useEffect(() => {
     const token = localStorage.getItem("token");
