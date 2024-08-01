@@ -5,6 +5,7 @@ import GlobalNavBar from "../../components/Post/GlobalNavBar";
 
 export const CreatePostForm = () => {
     const [message, setMessage] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -19,7 +20,7 @@ export const CreatePostForm = () => {
         }
 
         try {
-            await createPost(token, message);
+            await createPost(token, message, imageUrl);
             navigate("/posts");
         } catch (err) {
             console.error(err);
@@ -30,6 +31,10 @@ export const CreatePostForm = () => {
     const handleMessageChange = (event) => {
         setMessage(event.target.value);
     };
+
+    const handleImageUrlChange = (event) => {
+        setImageUrl(event.target.value)
+    }
 
     return (
         <>
@@ -42,6 +47,14 @@ export const CreatePostForm = () => {
                     type='text'
                     value={message}
                     onChange={handleMessageChange}
+                />
+                <label htmlFor='imageUrl'>Image Url:</label>
+
+                <input
+                    id='imageUrl'
+                    type='text'
+                    value={imageUrl}
+                    onChange={handleImageUrlChange}
                 />
                 <input
                     id='submit'
