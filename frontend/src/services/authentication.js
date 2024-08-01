@@ -20,10 +20,17 @@ export const login = async (email, password) => {
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
     let data = await response.json();
-    return data.token;
+    const session = {
+      token: data.token,
+      user: data.user,
+    };
+    return session;
   } else {
     const errorData = await response.json();
-    throw new Error(errorData.message || `Received status ${response.status} when logging in. Expected 201`);
+    throw new Error(
+      errorData.message ||
+        `Received status ${response.status} when logging in. Expected 201`
+    );
   }
 };
 
