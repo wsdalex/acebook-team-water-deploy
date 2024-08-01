@@ -11,6 +11,8 @@ export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const [noPostsMessage, setnoPostsMessage] = useState("");
+  const user = localStorage.getItem("user");
+  const user_name = JSON.parse(user).name
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,9 +39,11 @@ export const FeedPage = () => {
     return;
   }
 
+  
+
   return (
     <>
-      <GlobalNavBar></GlobalNavBar>
+      <GlobalNavBar user_name={user_name}></GlobalNavBar>
       <br></br>
       <div className="feed" role="feed">
         {posts.map((post) => (
