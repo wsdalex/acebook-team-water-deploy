@@ -39,7 +39,7 @@ export const FeedPage = () => {
 
   return (
     <>
-      <GlobalNavBar></GlobalNavBar>
+      <GlobalNavBar user_name='Reza'></GlobalNavBar>
       <br></br>
       <div className="feed" role="feed">
         {posts.map((post) => (
