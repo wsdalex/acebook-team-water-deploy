@@ -10,7 +10,7 @@ const getAllPosts = async (req, res) => {
 const createPost = async (req, res) => {
   const post = new Post({
     ...req.body, // spread operator works as like a copy and paste to copy the req.body and add in the user_id below
-    user_id: req.user_id, // must be same as what its in post 
+    user_id: req.user_id, // must be same as what its in post
   });
   await post.save();
 
