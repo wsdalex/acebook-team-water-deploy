@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import GlobalNavBar from "../../components/Post/GlobalNavBar";
 import { signup } from "../../services/authentication";
 
 export const SignupPage = () => {
@@ -10,14 +10,12 @@ export const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  
-
-  
 
   const isValidEmail = (email) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   };
+
 
   
     const handleSubmit = async (event) => {
@@ -59,46 +57,48 @@ export const SignupPage = () => {
 
   return (
     <>
+      <GlobalNavBar></GlobalNavBar>
+      <br></br>
       <h2>Signup</h2>
       <div id="instructions">Enter your details to sign up:</div>
       <form onSubmit={handleSubmit}>
         <div className="label-input-container">
-        <label htmlFor="name">Name:</label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={handleNameChange}
-        />
+          <label htmlFor="name">Name:</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+          />
         </div>
         <div className="label-input-container">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
+          <label htmlFor="email">Email:</label>
+          <input
+            id="email"
+            type="text"
+            value={email}
+            onChange={handleEmailChange}
+          />
         </div>
         <div className="label-input-container">
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
+          <label htmlFor="password">Password:</label>
+          <input
+            placeholder="Password"
+            id="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
         </div>
         <div className="label-input-container">
-        <label htmlFor="password">Confirm Password:</label>
-        <input
-          placeholder="Password"
-          id="confirm-password"
-          type="password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />
+          <label htmlFor="password">Confirm Password:</label>
+          <input
+            placeholder="Password"
+            id="confirm-password"
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
         </div>
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
@@ -107,4 +107,3 @@ export const SignupPage = () => {
     </>
   );
 };
-
