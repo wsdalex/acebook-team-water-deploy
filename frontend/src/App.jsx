@@ -7,6 +7,7 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
 import { CreatePostForm } from "./pages/CreatePost/CreatePostForm";
+import { AddComment } from "./pages/AddComment/AddComment";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/createpost",
     element: <CreatePostForm />,
+  },
+  {
+    path: "/addcomment",
+    element: <AddComment />,
   }
 ]);
 
