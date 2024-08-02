@@ -14,6 +14,11 @@ import {
 import { IconContext } from "react-icons/lib";
 import { PiSignOutBold } from "react-icons/pi";
 
+export const clearLocalStorage = () => {
+  localStorage.clear();
+  console.log("test run");
+  window.location.href = "/";
+};
 
 function GlobalNavBar(props) {
   return (
@@ -35,15 +40,14 @@ function GlobalNavBar(props) {
               <MdOutlinePostAdd />
             </a>
             <div style={{ paddingRight: "20px" }}></div>
-            <a href="/">
-              <PiSignOutBold />
-            </a>
           </IconContext.Provider>
+          <button onClick={clearLocalStorage} className="logout-button">
+            <PiSignOutBold />
+          </button>
         </div>
       </nav>
     </div>
   );
-
 }
 
 export default GlobalNavBar;

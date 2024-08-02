@@ -77,3 +77,9 @@
   height: 40px;
   padding-right: 50px;
 }
+
+.navbar-right.logout-button {
+  height: 40px;
+  padding-right: 80px;
+  background-color: #1d1b1bf4;
+}
