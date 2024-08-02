@@ -31,7 +31,7 @@ function GlobalNavBar(props) {
               <MdOutlineRssFeed />
             </a>
             <div style={{ paddingRight: "20px" }}></div>
-            <a href="/">
+            <a href="/createpost">
               <MdOutlinePostAdd />
             </a>
             <div style={{ paddingRight: "20px" }}></div>
