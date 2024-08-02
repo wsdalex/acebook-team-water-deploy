@@ -22,6 +22,8 @@ export const SignupPage = () => {
   
     const handleSubmit = async (event) => {
       event.preventDefault();
+      setErrorMessage("") // clears error message at the start of operations so that no old error messages are shown - doesn't change anything for now but may be useful if more error messages are coming in from the backend
+
       if (!isValidEmail(email)) {
         setErrorMessage("Invalid email address format");
         return;
@@ -34,7 +36,8 @@ export const SignupPage = () => {
           navigate("/login");
         } catch (err) {
           console.error(err);
-          navigate("/signup");
+          // navigate("/signup");
+          setErrorMessage(err.message)
         }
 
     }
