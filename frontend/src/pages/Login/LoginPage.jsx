@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import GlobalNavBar from "../../components/Post/GlobalNavBar";
 import { login } from "../../services/authentication";
-import "./loginPage.css"
+import "./loginPage.css";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -17,8 +17,8 @@ export const LoginPage = () => {
       localStorage.setItem("token", token);
       navigate("/posts");
     } catch (err) {
-      console.error(err); 
-      setErrorMessage(err.message) 
+      console.error(err);
+      setErrorMessage(err.message);
     }
   };
 
@@ -32,6 +32,8 @@ export const LoginPage = () => {
 
   return (
     <>
+      <GlobalNavBar></GlobalNavBar>
+      <br></br>
       <h2>Login</h2>
       <div id="instructions">Enter your login details:</div>
       <form onSubmit={handleSubmit}>

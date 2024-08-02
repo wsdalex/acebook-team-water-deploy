@@ -1,0 +1,79 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1d1b1bf4;
+  color: #fff;
+  /*padding: 1rem;*/
+  height: 50px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.navbar-left .logo {
+  font-size: 18px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Geneva,
+    Tahoma, sans-serif, sans-serif;
+  /*font-weight: bold;*/
+  vertical-align: middle;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding-left: 3rem;
+}
+
+.navbar-center .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.navbar-center .nav-links .feed-icon {
+  text-decoration: none;
+  margin-left: 1rem;
+  position: relative;
+  height: 30px;
+  padding-right: 0rem;
+}
+
+.navbar-center .nav-links li {
+  margin-right: 1rem;
+}
+
+.navbar-center .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Geneva,
+    Tahoma, sans-serif, sans-serif;
+  font-size: 15px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  padding-right: 3rem;
+}
+
+.navbar-right .user-icon {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1rem;
+  position: relative;
+  height: 30px;
+  padding-right: 2rem;
+}
+
+.navbar-right.drop-down.title {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Geneva,
+    Tahoma, sans-serif, sans-serif;
+  font-size: 15px;
+}
+
+.navbar-right .react-icons {
+  vertical-align: middle;
+  height: 40px;
+  padding-right: 50px;
+}
