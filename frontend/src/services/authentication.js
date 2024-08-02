@@ -1,6 +1,10 @@
 // docs: https://vitejs.dev/guide/env-and-mode.html
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+export const getToken = () => {
+  return window.localStorage.getItem("token")
+}
+
 export const login = async (email, password) => {
   const payload = {
     email: email,
