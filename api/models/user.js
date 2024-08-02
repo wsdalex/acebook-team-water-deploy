@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema({
   name: String,
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true }, // added unique: true to make sure the email can only be used once
   password: { type: String, required: true },
 });
 
@@ -26,13 +26,21 @@ UserSchema.pre('save', function(next) {
       next();
     });
   });
-
 });
 
 // comparePassword method to use in authentication
 UserSchema.methods.comparePassword = function(passwordToCompare) {
   return bcrypt.compare(passwordToCompare, this.password);
 }
+
+// checks for a duplicate key error and throws an error message - Email address is already taken
+UserSchema.post('save', function(error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(new Error('Email address is already taken'));
+  } else {
+    next(error);
+  }
+});
 
 const User = mongoose.model("User", UserSchema);
 

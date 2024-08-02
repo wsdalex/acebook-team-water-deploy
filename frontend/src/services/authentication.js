@@ -55,8 +55,9 @@ export const signup = async (name, email, password) => {
   if (response.status === 201) {
     return;
   } else {
+    const errorData = await response.json(); // added to add custom error message from back-end, for exp the unique user error message
     throw new Error(
-      `Received status ${response.status} when signing up. Expected 201`
+      errorData.message || `Received status ${response.status} when signing up. Expected 201` // if custom error message exists then that gets used
     );
   }
 };
