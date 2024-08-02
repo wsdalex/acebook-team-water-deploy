@@ -18,9 +18,20 @@ const createPost = async (req, res) => {
   res.status(201).json({ message: "Post created", token: newToken });
 };
 
+const getUserPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ user_id: req.user_id }).populate("user_id", "name email");
+    res.status(200).json({posts: posts});
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Error fetching the user's posts"})
+  }
+};
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
+  getUserPosts: getUserPosts,
 };
 
 module.exports = PostsController;
