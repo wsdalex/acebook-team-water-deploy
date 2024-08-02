@@ -5,7 +5,10 @@ import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import { CreatePostForm } from "./pages/CreatePost/CreatePostForm";
+
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -25,6 +28,10 @@ const router = createBrowserRouter([
     path: "/posts",
     element: <FeedPage />,
   },
+  {
+    path: "/createpost",
+    element: <CreatePostForm />,
+  }
 ]);
 
 const App = () => {

@@ -14,6 +14,7 @@ import {
 import { IconContext } from "react-icons/lib";
 import { PiSignOutBold } from "react-icons/pi";
 
+
 function GlobalNavBar(props) {
   return (
     <div>
@@ -42,6 +43,7 @@ function GlobalNavBar(props) {
       </nav>
     </div>
   );
+
 }
 
 export default GlobalNavBar;

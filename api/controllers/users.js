@@ -15,7 +15,11 @@ const create = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(400).json({ message: "Something went wrong" });
+      if (err.message === "Email address is already taken") { // added if else statement for checking unique email
+        res.status(400).json({ message: "Email address is already taken" });
+    } else {
+        res.status(400).json({ message: "Something went wrong" });
+    }
     });
 
 };

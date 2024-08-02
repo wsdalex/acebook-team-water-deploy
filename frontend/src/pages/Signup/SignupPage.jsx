@@ -16,22 +16,28 @@ export const SignupPage = () => {
     return emailPattern.test(email);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!isValidEmail(email)) {
-      setErrorMessage("Invalid email address format");
-      return;
-    } else if (password != confirmPassword) {
-      setErrorMessage("Passwords do not match");
-    } else {
-      try {
-        await signup(name, email, password);
-        console.log("redirecting...:");
-        navigate("/login");
-      } catch (err) {
-        console.error(err);
-        navigate("/signup");
-      }
+
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      setErrorMessage("") // clears error message at the start of operations so that no old error messages are shown - doesn't change anything for now but may be useful if more error messages are coming in from the backend
+
+      if (!isValidEmail(email)) {
+        setErrorMessage("Invalid email address format");
+        return;
+      } else if (password != confirmPassword) {
+        setErrorMessage("Passwords do not match")
+      } else {
+        try {
+          await signup(name, email, password);
+          console.log("redirecting...:");
+          navigate("/login");
+        } catch (err) {
+          console.error(err);
+          // navigate("/signup");
+          setErrorMessage(err.message)
+        }
+
     }
   };
 

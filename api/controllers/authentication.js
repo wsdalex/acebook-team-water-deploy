@@ -21,8 +21,16 @@ const createToken = async (req, res) => {
         }
 
         const token = generateToken(user.id);
-        res.status(201).json({ token: token, message: "OK" });
-
+        res.status(201).json({
+            token: token,
+            message: "OK",
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name,
+            },
+        });
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Server error" });
