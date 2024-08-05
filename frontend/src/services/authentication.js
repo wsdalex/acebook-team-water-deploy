@@ -1,6 +1,10 @@
 // docs: https://vitejs.dev/guide/env-and-mode.html
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+export const getToken = () => {
+  return window.localStorage.getItem("token")
+}
+
 export const login = async (email, password) => {
   const payload = {
     email: email,
@@ -55,8 +59,9 @@ export const signup = async (name, email, password) => {
   if (response.status === 201) {
     return;
   } else {
+    const errorData = await response.json(); // added to add custom error message from back-end, for exp the unique user error message
     throw new Error(
-      `Received status ${response.status} when signing up. Expected 201`
+      errorData.message || `Received status ${response.status} when signing up. Expected 201` // if custom error message exists then that gets used
     );
   }
 };

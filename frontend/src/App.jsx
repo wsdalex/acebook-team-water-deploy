@@ -1,13 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import "./App.css";
+import "./GlobalNavBar.css";
 import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
+import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import { CreatePostForm } from "./pages/CreatePost/CreatePostForm";
 import { AddComment } from "./pages/AddComment/AddComment";
+
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -32,8 +35,13 @@ const router = createBrowserRouter([
     element: <CreatePostForm />,
   },
   {
+
     path: "/addcomment",
     element: <AddComment />,
+
+    path: "/profile",
+    element: <ProfilePage />,
+
   }
 ]);
 
