@@ -1,5 +1,3 @@
-import { getToken } from "./authentication";
-
 // docs: https://vitejs.dev/guide/env-and-mode.html
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -42,9 +40,7 @@ export const createPost = async (token, message, imageUrl) => {
   return data;
 };
 
-export const getUserPosts = async () => {
-  const token = getToken(); // token is being called in here instead of the ProfilePage.jsx 
-  // any changes done, removes token - CHECK!
+export const getUserPosts = async (token) => { // readded token to be passed as an argument
   if (!token) {
     throw new Error("No token found");
   }
