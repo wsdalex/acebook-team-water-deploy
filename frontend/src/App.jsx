@@ -39,9 +39,10 @@ const router = createBrowserRouter([
     path: "/addcomment",
     element: <AddComment />,
 
+  },
+  {
     path: "/profile",
     element: <ProfilePage />,
-
   }
 ]);
 
