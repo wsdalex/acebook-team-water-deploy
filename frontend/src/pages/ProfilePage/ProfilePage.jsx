@@ -25,7 +25,7 @@ export const ProfilePage = () => {
 
             try {
                 const userPosts = await getUserPosts(token);
-                setPosts(userPosts);
+                setPosts(userPosts.sort((a, b) => new Date(b.createdAt) - new Date (a.createdAt)));
             } catch (err) {
                 setError(err.message);
                 console.log(err.message);
