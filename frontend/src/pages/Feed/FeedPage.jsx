@@ -22,7 +22,7 @@ export const FeedPage = () => {
           if (data === null || !data.posts.length) {
             setnoPostsMessage("No posts to display");
           } else {
-            setPosts(data.posts);
+            setPosts(data.posts.sort((a, b) => new Date(b.createdAt) - new Date (a.createdAt)));
             localStorage.setItem("token", data.token);
           }
         })
