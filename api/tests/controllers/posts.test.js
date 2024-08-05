@@ -24,7 +24,9 @@ const createToken = (userId) => {
 
 let token;
 describe("/posts", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
     const user = new User({
       email: "post-test@test.com",
       password: "12345678",
@@ -32,11 +34,6 @@ describe("/posts", () => {
     await user.save();
     await Post.deleteMany({});
     token = createToken(user.id);
-  });
-
-  afterEach(async () => {
-    await User.deleteMany({});
-    await Post.deleteMany({});
   });
 
   describe("POST, when a valid token is present", () => {
@@ -110,7 +107,7 @@ describe("/posts", () => {
       await post2.save();
 
       const response = await request(app)
-        .get("/posts")
+        .get("/posts/all")
         .set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toEqual(200);
@@ -123,7 +120,7 @@ describe("/posts", () => {
       await post2.save();
 
       const response = await request(app)
-        .get("/posts")
+        .get("/posts/all")
         .set("Authorization", `Bearer ${token}`);
 
       const posts = response.body.posts;
@@ -141,7 +138,7 @@ describe("/posts", () => {
       await post2.save();
 
       const response = await request(app)
-        .get("/posts")
+        .get("/posts/all")
         .set("Authorization", `Bearer ${token}`);
 
       const newToken = response.body.token;

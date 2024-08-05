@@ -5,6 +5,7 @@ const Post = require("../../models/post");
 describe("Post model", () => {
   beforeEach(async () => {
     await Post.deleteMany({});
+    await User.deleteMany({});
   });
 
   it("has a message", () => {
@@ -44,17 +45,17 @@ describe("Post model", () => {
   test("has comments", async () => {
     const user = new User({ email: "email", password: "passsword" });
     await user.save();
-    const post = new Post({ message: "some message" });
+    const post = new Post({ message: "some message", comments: [] });
     const comment = {
       user_id: user._id,
-      message: "lol",
+      comment: "lol",
     };
     post.comments.push(comment);
     await post.save();
 
     const posts = await Post.find();
     const comments = posts[0].comments;
-    expect(comments[0].message).toBe("lol");
+    expect(comments[0].comment).toBe("lol");
     expect(comments[0].user_id.toString()).toBe(user._id.toString());
   });
 });

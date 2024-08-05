@@ -38,7 +38,7 @@ describe("User model", () => {
     const users = await User.find();
 
     expect(users[0].email).toEqual("someone@example.com");
-    expect(users[0].password).toEqual("password");
+    expect(await users[0].comparePassword("password")).toEqual(true);
     expect(users[0].name).toEqual("John Doe");
   });
 });
