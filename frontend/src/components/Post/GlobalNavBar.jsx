@@ -35,10 +35,17 @@ function GlobalNavBar(props) {
             <a href="/posts">
               <MdOutlineRssFeed />
             </a>
+            
+            <div style={{ paddingRight: "20px" }}></div>
+            <a href="/profile">
+              My posts
+            </a>
+
             <div style={{ paddingRight: "20px" }}></div>
             <a href="/createpost">
               <MdOutlinePostAdd />
             </a>
+
             <div style={{ paddingRight: "20px" }}></div>
           </IconContext.Provider>
           <button onClick={clearLocalStorage} className="logout-button">
