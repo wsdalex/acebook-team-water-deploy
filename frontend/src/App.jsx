@@ -9,6 +9,7 @@ import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CreatePostForm } from "./pages/CreatePost/CreatePostForm";
+import { AddComment } from "./pages/AddComment/AddComment";
 
 
 // docs: https://reactrouter.com/en/main/start/overview
@@ -34,8 +35,13 @@ const router = createBrowserRouter([
     element: <CreatePostForm />,
   },
   {
+
+    path: "/addcomment",
+    element: <AddComment />,
+
     path: "/profile",
     element: <ProfilePage />,
+
   }
 ]);
 
