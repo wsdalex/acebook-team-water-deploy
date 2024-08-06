@@ -38,7 +38,7 @@ const deletePost = async (req, res) => {
     if (postToDelete.user_id.toString() !== req.user_id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
-    await postToDelete.delete();
+    await Post.deleteOne({ _id: id }); // delete method changed to deleteOne and postToDelete changed from instance to model itself
     return res.status(200).json({ message: "Post deleted" });
   } catch (error) {
     console.log(error);
