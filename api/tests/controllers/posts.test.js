@@ -23,7 +23,6 @@ const createToken = (userId) => {
 };
 
 let token;
-let postId;
 
 describe("/posts", () => {
   beforeEach(async () => {
@@ -166,7 +165,7 @@ describe("/posts", () => {
       await post1.save();
       await post2.save();
       const response = await request(app)
-        .get("/posts")
+        .get("/posts/all")
         .set("Authorization", `Bearer ${token}`);
 
       const posts = response.body.posts;
@@ -184,7 +183,7 @@ describe("/posts", () => {
       await post2.save();
 
       const response = await request(app)
-        .get("/posts")
+        .get("/posts/all")
         .set("Authorization", `Bearer ${token}`);
 
       const newToken = response.body.token;
