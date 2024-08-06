@@ -54,3 +54,9 @@ const PostsController = {
 };
 
 module.exports = PostsController;
+
+// curl command example to delete a post
+
+// curl -x DELETE -H "Authorization Bearer (token)" http://localhost:3000/posts/(id)
+
+// curl -X DELETE -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjZiMGRhZTVlNzY2ODcxZTkxZDY4NzMzIiwiaWF0IjoxNzIyOTM3MjAyLCJleHAiOjE3MjI5Mzc4MDJ9.8VX79p4vUk3Iq0LZCHoCuYTvXmUS6JQ-fU3WkLtSf2Y" http://localhost:3000/posts/66b1ef77158ea7b19674057f
