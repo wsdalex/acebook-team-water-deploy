@@ -22,36 +22,95 @@ const createToken = (userId) => {
 };
 
 let token;
+let postId;
+let user;
 
 describe("/comments", () => {
   beforeAll(async () => {
     await User.deleteMany({});
     await Post.deleteMany({});
-  });
 
-  test("POST, when a valid token is present", async () => {
-    const user = new User({
+    user = new User({
       email: "post-test@test.com",
       password: "12345678",
     });
     await user.save();
 
-    const post = new Post({
-      message: "test post",
-      user_id: user._id,
-      comments: [],
-    });
-
-    await post.save();
-
     token = createToken(user._id);
 
-    const response = await request(app)
-      .post("/comments")
-      .set("Authorization", `Bearer ${token}`)
-      .send({ comment: "test comment", post_id: post._id, user_id: user._id });
+    const post = new Post({
+      message: "Test post",
+      user_id: user._id,
+    });
+    await post.save();
+    postId = post._id;
+  });
+  // the line below updates the comments to be empty without deleting all posts and users
+  afterEach(async () => {
+    await Post.updateOne({ _id: postId }, { $set: { comments: [] } });
+  });
 
-    console.log(response.body); // Debugging output
-    expect(response.status).toEqual(201);
+  describe("POST a comment when a valid token is present", () => {
+    test("responds with a 201", async () => {
+      const response = await request(app)
+        .post("/comments")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ comment: "This is a test comment", post_id: postId });
+
+      expect(response.status).toEqual(201);
+    });
+
+    test("creates a new comment", async () => {
+      await request(app)
+        .post("/comments")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ comment: "This is a test comment", post_id: postId });
+
+      const post = await Post.findById(postId);
+      expect(post).not.toBeNull();
+      expect(post.comments.length).toEqual(1);
+      expect(post.comments[0].comment).toEqual("This is a test comment");
+    });
+
+    test("returns a new token", async () => {
+      const response = await request(app)
+        .post("/comments")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ comment: "Test comment", post_id: postId });
+
+      const newToken = response.body.token;
+      const newTokenDecoded = JWT.decode(newToken, secret);
+      const oldTokenDecoded = JWT.decode(token, secret);
+
+      expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
+    });
+  });
+
+  describe("POST, when token is missing", () => {
+    test("responds with a 401", async () => {
+      const response = await request(app)
+        .post("/comments")
+        .send({ comment: "Test comment", post_id: postId });
+
+      expect(response.status).toEqual(401);
+    });
+
+    test("a comment is not created", async () => {
+      await request(app)
+        .post("/comments")
+        .send({ comment: "Test comment", post_id: postId });
+
+      const post = await Post.findById(postId);
+      expect(post).not.toBeNull();
+      expect(post.comments.length).toEqual(0);
+    });
+
+    test("a token is not returned", async () => {
+      const response = await request(app)
+        .post("/comments")
+        .send({ comment: "Test comment", post_id: postId });
+
+      expect(response.body.token).toBeUndefined();
+    });
   });
 });
