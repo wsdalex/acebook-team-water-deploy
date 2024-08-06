@@ -1,5 +1,13 @@
+/* To allow navbar to be the same width as the page */
 #root {
   margin: 0 auto;
   text-align: center;
+  width: 100%;
+}
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
