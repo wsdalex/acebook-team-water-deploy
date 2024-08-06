@@ -26,4 +26,21 @@ describe("comments services", () => {
     expect(options.method).toEqual("POST");
     expect(options.headers["Authorization"]).toEqual("Bearer testToken");
   });
+
+  test("rejects with an error if the status is not 201", async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify({ message: "Unable to create comment" }),
+      { status: 400 }
+    );
+
+    const token = "testToken";
+    const comment = "This is a test comment";
+    const post_id = "testPostId";
+
+    try {
+      await createComment(token, comment, post_id);
+    } catch (err) {
+      expect(err.message).toEqual("Unable to create comment");
+    }
+  });
 });
