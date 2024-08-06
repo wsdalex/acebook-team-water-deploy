@@ -23,6 +23,8 @@ const createToken = (userId) => {
 };
 
 let token;
+let postId;
+
 describe("/posts", () => {
   beforeAll(async () => {
     const user = new User({
@@ -73,6 +75,17 @@ describe("/posts", () => {
       // iat stands for issued at
       expect(newTokenDecoded.iat > oldTokenDecoded.iat).toEqual(true);
     });
+
+    test("deletes a post when given an id and a valid user", async () => {
+      const deleteResponse = await request(app)
+        .delete(`/posts/${postId}`)
+        .set("Authorization", `Bearer ${token}`)
+      expect(deleteResponse.status).toEqual(200);
+      expect(deleteResponse.body.message).toEqual("Post deleted");
+
+      const deletedPost = await Post.findById(postToDelete._id);
+      expect(deletedPost).toEqual(null);
+    })
   });
 
   describe("POST, when token is missing", () => {
