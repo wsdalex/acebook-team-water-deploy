@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { likePost } from "../../services/posts";
-
+import "./Post.css";
 
 const Post = (props) => {
     const navigate = useNavigate();
@@ -30,11 +30,11 @@ const Post = (props) => {
         }
     };
 
-
     const userName = props.post.user_id.name;
     const formattedDate = moment(props.post.createdAt).fromNow();
     const image = props.post.imageUrl;
     const comments = props.post.comments;
+    const profileImage = props.post.user_id.profileImage
     return (
         <div className='d-flex justify-content-center'>
             <Toast style={{ width: "60%" }}>
@@ -44,6 +44,7 @@ const Post = (props) => {
                         className='rounded me-2'
                         alt=''
                     />
+                    <img src={profileImage ? profileImage : "holder.js/20x20?text=%20"} className="rounded me-2 profile-image" alt="Profile" />
                     <strong className='me-auto'>
                         {userName ? userName : ""}
                     </strong>{" "}
