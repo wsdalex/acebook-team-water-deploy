@@ -48,7 +48,7 @@ export const ProfilePage = () => {
                 posts.map((post) => (
                     <Post post={post} key={post._id} filepath={sampleimage} />
                 ))
-            ) : (
+            ) : ( //automatically renders comments as they are part of post component
                 <p>No posts to display</p>
             )}
         </div>
