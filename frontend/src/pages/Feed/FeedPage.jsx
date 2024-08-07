@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import sampleimage from "../../assets/image.png";
 import GlobalNavBar from "../../components/Post/GlobalNavBar";
-
-
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 

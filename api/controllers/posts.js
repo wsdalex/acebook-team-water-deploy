@@ -2,7 +2,9 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find().populate("user_id", "name email").populate("comments.user_id", "name");
+  const posts = await Post.find()
+  .populate("user_id", "name email")
+  .populate("comments.user_id", "name email");
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: posts, token: token });
 };
@@ -20,7 +22,9 @@ const createPost = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ user_id: req.user_id }).populate("user_id", "name email")//.populate("comments.user_id", "name"); <-- didn't need to do this. Interesting!
+    const posts = await Post.find({ user_id: req.user_id })
+    .populate("user_id", "name email")
+    .populate("comments.user_id", "name");
     res.status(200).json({posts: posts});
   } catch (err) {
     console.log(err);

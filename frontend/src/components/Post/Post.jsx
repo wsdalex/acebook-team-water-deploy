@@ -33,7 +33,7 @@ const Post = (props) => {
       <br /><br />
           <Button onClick={handleAddComment}>Add a comment</Button>
           <br />
-          <br />
+          <br /> 
           <div className="comments-section">
             <h5>Comments</h5>
             {comments.length > 0 ? (
@@ -51,5 +51,5 @@ const Post = (props) => {
     </div>
   );
 };
-
+//line 37 is where comments added to post starts
 export default Post;
