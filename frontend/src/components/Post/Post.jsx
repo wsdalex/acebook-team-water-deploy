@@ -6,7 +6,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { likePost } from "../../services/posts";
 import Accordion from "react-bootstrap/Accordion";
-
+import "./Post.css";
 
 const Post = (props) => {
     const navigate = useNavigate();
@@ -31,19 +31,19 @@ const Post = (props) => {
         }
     };
 
-
     const userName = props.post.user_id.name;
     const formattedDate = moment(props.post.createdAt).fromNow();
     const image = props.post.imageUrl;
     const comments = props.post.comments;
+    const profileImage = props.post.user_id.profileImage
     return (
         <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }}>
           <Toast style={{ width: "60%" }}>
             <Toast.Header>
               <img
                 src='holder.js/20x20?text=%20'
-                className='rounded me-2'
-                alt=''
+                className='rounded me-2 profile-image"'
+                alt='Profile'
               />
               <strong className='me-auto'>
                 {userName ? userName : ""}
@@ -78,6 +78,7 @@ const Post = (props) => {
             
             <Accordion.Body>
               {comments.length > 0 ? (
+
               comments.map((comment) => (
               <div key={comment._id} className="comment" style={commentStyle}>
               <p>
