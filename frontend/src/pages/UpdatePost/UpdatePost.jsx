@@ -1,24 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../../services/posts";
+import { updatePost } from "../../services/posts";
 import GlobalNavBar from "../../components/Post/GlobalNavBar";
 
-const fakePost = {
-    message: "test message",
-    user_id: "test id",
-    imageUrl: "test image",
-    comments: []
-}
 
 export const UpdatePostForm = () => {
-    const [message, setMessage] = useState(fakePost.message); // Update when backend created
-    const [imageUrl, setImageUrl] = useState(fakePost.imageUrl);
-    // const navigate = useNavigate();
-
+    const oldMessage = localStorage.getItem("message")
+    const oldImageUrl = localStorage.getItem("imageUrl")
+    const [message, setMessage] = useState(oldMessage); // Update when backend created
+    const [imageUrl, setImageUrl] = useState(oldImageUrl);
+    const navigate = useNavigate();
     const handleSubmit = async (event) => {
 
         event.preventDefault();
         const token = localStorage.getItem("token")
+        const post_id = localStorage.getItem("post_id")
 
         if (!token) {
             console.error("no token found");
@@ -27,8 +23,9 @@ export const UpdatePostForm = () => {
         }
 
         try {
-            // await createPost(token, message, imageUrl); Update when backend is complete 
-            navigate("/posts");
+            await updatePost(token, message, imageUrl, post_id);
+            console.log("post has been updated")
+            navigate("/profile");
         } catch (err) {
             console.error(err);
             navigate("/login");
@@ -72,3 +69,4 @@ export const UpdatePostForm = () => {
         </>
     );
 };
+

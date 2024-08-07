@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
+const { post } = require("../app");
 
 const getAllPosts = async (req, res) => {
   const posts = await Post.find().populate("user_id", "name email");
@@ -20,11 +21,14 @@ const createPost = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ user_id: req.user_id }).populate("user_id", "name email");
-    res.status(200).json({posts: posts});
+    const posts = await Post.find({ user_id: req.user_id }).populate(
+      "user_id",
+      "name email"
+    );
+    res.status(200).json({ posts: posts });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Error fetching the user's posts"})
+    res.status(500).json({ message: "Error fetching the user's posts" });
   }
 };
 
@@ -44,13 +48,35 @@ const deletePost = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
+
+const updatePost = async (req, res) => {
+  const { id } = req.params; // id is the id of the post to update that comes from the request sent
+  try {
+    const postToUpdate = await Post.findById(id);
+    if (!postToUpdate) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    if (postToUpdate.user_id.toString() !== req.user_id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+
+    const filter = { _id: id };
+    const update = { message: req.body.message, imageUrl: req.body.imageUrl };
+    const post = await Post.findOneAndUpdate(filter, update, { new: true });
+    return res.status(200).json({ message: "Post updated", post: post });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   getUserPosts: getUserPosts,
   deletePost: deletePost,
+  updatePost: updatePost,
 };
 
 module.exports = PostsController;

@@ -1,16 +1,24 @@
 import Toast from 'react-bootstrap/Toast';
 import moment from 'moment';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Post = (props) => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAddComment = () => {
     localStorage.setItem("post_id", props.post._id)
     navigate("/addcomment")
 
+  }
+
+  const handleEditPost = () => {
+    localStorage.setItem("post_id", props.post._id)
+    localStorage.setItem("message", props.post.message)
+    localStorage.setItem("imageUrl", props.post.imageUrl)
+    navigate(`/updatepost`)
   }
   const userName = props.post.user_id.name
   const formattedDate = moment(props.post.createdAt).fromNow();
@@ -28,6 +36,9 @@ const Post = (props) => {
     <Toast.Body><article key={props.post._id}>{props.post.message}</article><br></br><img src={image ? image : props.filepath}style={{
           width: "80%"}} ></img></Toast.Body><br></br>
           <Button onClick={handleAddComment}>Add a comment</Button>
+          {location.pathname === "/profile" && (
+            <Button onClick={handleEditPost}>Edit Post</Button>
+          )}
 </Toast>
 </div>
 );
