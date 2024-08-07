@@ -41,7 +41,7 @@ const seedData = async () => {
       user_id: user1._id,
       imageUrl:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Bank-of-England.jpg/250px-Bank-of-England.jpg",
-      comments: [{ user_id: user2._id, message: "That is a shame" }],
+      comments: [{ user_id: user2._id, comment: "That is a shame" }],
       likes: [user2._id],
     });
     const post2 = await Post.create({
@@ -52,7 +52,7 @@ const seedData = async () => {
       comments: [
         {
           user_id: user1._id,
-          message: "Gosh, the market is on a downward turn!",
+          comment: "Gosh, the market is on a downward turn!",
         },
       ],
       likes: [user1._id],
@@ -63,7 +63,7 @@ const seedData = async () => {
       user_id: user2._id,
       imageUrl:
         "https://cdn.mos.cms.futurecdn.net/gJJFamQca86CibEeDmegk-1200-80.jpg",
-      comments: [{ user_id: user1._id, message: "Indeed it is!" }],
+      comments: [{ user_id: user1._id, comment: "Indeed it is!" }],
     });
 
     console.log("Seed data created successfully");
