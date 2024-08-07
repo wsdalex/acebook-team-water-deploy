@@ -1,0 +1,44 @@
+.feed-page {
+    position: relative;
+}
+
+.search-active .feed,
+.search-active .GlobalNavBar {
+    filter: blur(2px);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* filter: none ensures the item is clear and not blurred like the background irrelevant items */
+.search-results {
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    filter: none;
+}
+
+.search-input {
+    position: relative;
+    z-index: 3;
+    filter: none;
+}
+
+.search-active .search-results {
+    filter: none;
+}
+
+.search-container,
+.search-container * {
+    filter: none !important; /* for some reason !important stops the search results from being blurred even if filtered: none is there */
+}

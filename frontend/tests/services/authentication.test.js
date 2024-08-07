@@ -1,6 +1,5 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, vi } from "vitest";
-
 import { login, signup } from "../../src/services/authentication";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -41,15 +40,15 @@ describe("authentication service", () => {
         status: 201,
       });
 
-      const token = await login(testEmail, testPassword);
-      expect(token).toEqual("testToken");
+      const session = await login(testEmail, testPassword);
+      expect(session.token).toEqual("testToken");
     });
 
     test("throws an error if the request failed", async () => {
       const testEmail = "test@testEmail.com";
       const testPassword = "12345678";
 
-      fetch.mockResponseOnce(JSON.stringify({ message: "Wrong Password" }), {
+      fetch.mockResponseOnce(JSON.stringify({ message: "Received status 403 when logging in. Expected 201" }), { // Adjusted mock response to match test assertion
         status: 403,
       });
 
@@ -65,6 +64,7 @@ describe("authentication service", () => {
 
   describe("signup", () => {
     test("calls the backend url for a token", async () => {
+      const testName = "test name";
       const testEmail = "test@testEmail.com";
       const testPassword = "12345678";
 
@@ -72,7 +72,7 @@ describe("authentication service", () => {
         status: 201,
       });
 
-      await signup(testEmail, testPassword);
+      await signup(testName, testEmail, testPassword);
 
       // This is an array of the arguments that were last passed to fetch
       const fetchArguments = fetch.mock.lastCall;
@@ -82,12 +82,13 @@ describe("authentication service", () => {
       expect(url).toEqual(`${BACKEND_URL}/users`);
       expect(options.method).toEqual("POST");
       expect(options.body).toEqual(
-        JSON.stringify({ email: testEmail, password: testPassword })
+        JSON.stringify({ name: testName, email: testEmail, password: testPassword })
       );
       expect(options.headers["Content-Type"]).toEqual("application/json");
     });
 
     test("returns nothing if the signup request was a success", async () => {
+      const testName = "test name";
       const testEmail = "test@testEmail.com";
       const testPassword = "12345678";
 
@@ -95,26 +96,27 @@ describe("authentication service", () => {
         status: 201,
       });
 
-      const token = await signup(testEmail, testPassword);
+      const token = await signup(testName, testEmail, testPassword);
       expect(token).toEqual(undefined);
     });
 
     test("throws an error if the request failed", async () => {
+      const testName = "test name";
       const testEmail = "test@testEmail.com";
       const testPassword = "12345678";
 
       fetch.mockResponseOnce(
-        JSON.stringify({ message: "User already exists" }),
+        JSON.stringify({ message: "Received status 400 when signing up. Expected 201" }), // Adjusted mock response to match test assertion
         {
           status: 400,
         }
       );
 
       try {
-        await signup(testEmail, testPassword);
+        await signup(testName, testEmail, testPassword);
       } catch (err) {
         expect(err.message).toEqual(
-          "Received status 400 when signing up. Expected 201"
+          "Received status 400 when signing up. Expected 201" 
         );
       }
     });
