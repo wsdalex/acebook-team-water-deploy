@@ -16,7 +16,15 @@ export const FeedPage = () => {
   // set a boolean if searching is happening or not
   const [isSearching, setIsSearching] = useState(false);
   const user = localStorage.getItem("user");
-  const user_name = JSON.parse(user).name
+  let user_name = ""; // Added check to ensure 'user' is not 'null', as throws error
+  if (user) {
+    try {
+      const userObj = JSON.parse(user);
+      user_name = userObj.name;
+    } catch (error) {
+      console.error("Error parsing user data", error);
+    }
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("token");
