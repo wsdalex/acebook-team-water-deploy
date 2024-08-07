@@ -2,9 +2,19 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find().populate("user_id", "name email");
+
+  const posts = await Post.find()
+  .populate("user_id", "name email")
+  .populate("comments.user_id", "name email");
+
+  const postsWithLikes = posts.map(post => ({
+    ...post._doc, // spread operator to copy the post object - in mongoose the object is stored in _doc
+    numberOfLikes: post.likes.length,
+    isLikedByUser: post.likes.includes(req.user_id) // check if the user_id is in the likes array - will return true or false
+  }));
+
   const token = generateToken(req.user_id);
-  res.status(200).json({ posts: posts, token: token });
+  res.status(200).json({ posts: postsWithLikes, token: token });
 };
 
 const createPost = async (req, res) => {
@@ -20,8 +30,18 @@ const createPost = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ user_id: req.user_id }).populate("user_id", "name email");
-    res.status(200).json({posts: posts});
+
+    const posts = await Post.find({ user_id: req.user_id })
+    .populate("user_id", "name email")
+    .populate("comments.user_id", "name");
+
+    const postsWithLikes = posts.map(post => ({
+      ...post._doc,
+      numberOfLikes: post.likes.length,
+      isLikedByUser: post.likes.includes(req.user_id)
+    }));
+    res.status(200).json({posts: postsWithLikes});
+
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Error fetching the user's posts"})
@@ -46,11 +66,43 @@ const deletePost = async (req, res) => {
   }
 }
 
+const likePost = async (req,res) => {
+  const { id } = req.params;
+  const userId = req.user_id;
+
+  try {
+    const postToLike = await Post.findById(id);
+    if (!postToLike) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    const likeIndex = postToLike.likes.indexOf(userId);
+    if (likeIndex > -1) {
+      // user already liked the post so this is an unlike
+      postToLike.likes.splice(likeIndex, 1);
+    } else {
+      // user has not liked the post so this is a like. it also stops duplicate likes from the same user
+      if (!postToLike.likes.includes(userId)) {
+        postToLike.likes.push(userId);
+      }
+    }
+
+    await postToLike.save();
+    res.status(200).json({ message: "Post liked", numberOfLikes: postToLike.likes.length });
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+
+}
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   getUserPosts: getUserPosts,
   deletePost: deletePost,
+  likePost: likePost
 };
 
 module.exports = PostsController;
