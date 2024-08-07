@@ -60,3 +60,8 @@ const App = () => {
 };
 
 export default App;
+
+
+//give chatgpt all your files and ask it to create the files for showing comments
+//you have been following chat gpt but maybe axios isnt right
+//

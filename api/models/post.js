@@ -13,6 +13,7 @@ const PostSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   imageUrl: String,
   comments: [CommentSchema],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // array to store ids of users that like the post
 }, { timestamps: true });
 
 // We use the Schema to create the Post model. Models are classes which we can

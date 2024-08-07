@@ -81,6 +81,24 @@ export const updatePost = async (token, message, imageUrl, post_id) => {
   if (response.status !== 200) {
     throw new Error("Unable to update post");
   }
+    const data = await response.json();
+  return data;
+};
+
+export const likePost = async (token, postId) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/${postId}/like`, requestOptions);
+
+  if (!response.ok) {
+    throw new Error("Failed to update like");
+  }
 
   const data = await response.json();
   return data;

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import GlobalNavBar from "../../components/Post/GlobalNavBar";
 import { signup } from "../../services/authentication";
+import "./SignupPage.css";
+import defaultProfileImage from "../../assets/defaultProfileImage.svg.png";
 
 export const SignupPage = () => {
   const [name, setName] = useState("");
@@ -9,6 +11,7 @@ export const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
   const isValidEmail = (email) => {
@@ -29,7 +32,8 @@ export const SignupPage = () => {
         setErrorMessage("Passwords do not match")
       } else {
         try {
-          await signup(name, email, password);
+          const imageForProfile = profileImage || defaultProfileImage // logical OR operator to set default profile image if no image is provided
+          await signup(name, email, password, imageForProfile); // passing in imageForProfile
           console.log("redirecting...:");
           navigate("/login");
         } catch (err) {
@@ -54,56 +58,72 @@ export const SignupPage = () => {
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
   };
+  const handleProfileImageChange = (event) => {
+    setProfileImage(event.target.value);
+  };
 
   return (
-    <>
-      <GlobalNavBar></GlobalNavBar>
-      <br></br>
-      <h2>Signup</h2>
-      <div id="instructions">Enter your details to sign up:</div>
-      <form onSubmit={handleSubmit}>
-        <div className="label-input-container">
-          <label htmlFor="name">Name:</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={handleNameChange}
-          />
+    <div className="page-container">
+      <GlobalNavBar />
+      <div className="signup-container">
+        <div className="signup-form">
+          <h2>Signup</h2>
+          <div id="instructions">Enter your details to sign up:</div>
+          <form onSubmit={handleSubmit}>
+            <div className="label-input-container">
+              <label htmlFor="name">Name:</label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+              />
+            </div>
+            <div className="label-input-container">
+              <label htmlFor="email">Email:</label>
+              <input
+                id="email"
+                type="text"
+                value={email}
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div className="label-input-container">
+              <label htmlFor="password">Password:</label>
+              <input
+                placeholder="Password"
+                id="password"
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </div>
+            <div className="label-input-container">
+              <label htmlFor="confirm-password">Confirm Password:</label>
+              <input
+                placeholder="Confirm Password"
+                id="confirm-password"
+                type="password"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+              />
+            </div>
+            <div className="label-input-container">
+              <label htmlFor="profile-image">Profile Image URL (not required):</label>
+              <input
+                id="profile-image"
+                type="text"
+                value={profileImage}
+                onChange={handleProfileImageChange}
+                placeholder="Insert URL here"
+              />
+            </div>
+            <input role="submit-button" id="submit" type="submit" value="Submit" />
+            <Link to="/login">Already have an account? Login here</Link>
+          </form>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
-        <div className="label-input-container">
-          <label htmlFor="email">Email:</label>
-          <input
-            id="email"
-            type="text"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div className="label-input-container">
-          <label htmlFor="password">Password:</label>
-          <input
-            placeholder="Password"
-            id="password"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-        <div className="label-input-container">
-          <label htmlFor="password">Confirm Password:</label>
-          <input
-            placeholder="Password"
-            id="confirm-password"
-            type="password"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-          />
-        </div>
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
-      <br />
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-    </>
+      </div>
+    </div>
   );
 };
