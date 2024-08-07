@@ -5,8 +5,9 @@ const create = (req, res) => {
   const name = req.body.name
   const email = req.body.email;
   const password = req.body.password;
+  const profileImage = req.body.profileImage;
 
-  const user = new User({ name, email, password });
+  const user = new User({ name, email, password, profileImage });
   user
     .save()
     .then((user) => {

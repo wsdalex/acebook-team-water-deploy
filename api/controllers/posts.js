@@ -5,7 +5,7 @@ const { post } = require("../app");
 const getAllPosts = async (req, res) => {
 
   const posts = await Post.find()
-  .populate("user_id", "name email")
+  .populate("user_id", "name email profileImage")
   .populate("comments.user_id", "name email");
 
   const postsWithLikes = posts.map(post => ({
@@ -34,7 +34,7 @@ const getUserPosts = async (req, res) => {
 
 
     const posts = await Post.find({ user_id: req.user_id })
-    .populate("user_id", "name email")
+    .populate("user_id", "name email profileImage")
     .populate("comments.user_id", "name");
 
     const postsWithLikes = posts.map(post => ({
