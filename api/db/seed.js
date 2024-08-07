@@ -42,6 +42,7 @@ const seedData = async () => {
       imageUrl:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Bank-of-England.jpg/250px-Bank-of-England.jpg",
       comments: [{ user_id: user2._id, message: "That is a shame" }],
+      likes: [user2._id],
     });
     const post2 = await Post.create({
       message: "Intel axes 15,000 jobs after sales tumble",
@@ -54,6 +55,7 @@ const seedData = async () => {
           message: "Gosh, the market is on a downward turn!",
         },
       ],
+      likes: [user1._id],
     });
 
     const post3 = await Post.create({
