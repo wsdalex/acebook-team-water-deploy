@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../src/services/authentication";
 
 import { SignupPage } from "../../src/pages/Signup/SignupPage";
@@ -11,7 +11,10 @@ import { SignupPage } from "../../src/pages/Signup/SignupPage";
 vi.mock("react-router-dom", () => {
   const navigateMock = vi.fn();
   const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-  return { useNavigate: useNavigateMock };
+  return { 
+    useNavigate: useNavigateMock,
+    Link: ({ to, children }) => <a href={to}>{children}</a>
+  };
 });
 
 // Mocking the signup service
@@ -24,12 +27,16 @@ vi.mock("../../src/services/authentication", () => {
 const completeSignupForm = async () => {
   const user = userEvent.setup();
 
+  const nameInputEl = screen.getByLabelText("Name:");
   const emailInputEl = screen.getByLabelText("Email:");
   const passwordInputEl = screen.getByLabelText("Password:");
-  const submitButtonEl = screen.getByRole("submit-button");
+  const confirmPasswordInputEl = screen.getByLabelText("Confirm Password:");
+  const submitButtonEl = screen.getByDisplayValue("Submit");
 
+  await user.type(nameInputEl, "Test User");
   await user.type(emailInputEl, "test@email.com");
   await user.type(passwordInputEl, "1234");
+  await user.type(confirmPasswordInputEl, "1234");
   await user.click(submitButtonEl);
 };
 
@@ -43,7 +50,7 @@ describe("Signup Page", () => {
 
     await completeSignupForm();
 
-    expect(signup).toHaveBeenCalledWith("test@email.com", "1234");
+    expect(signup).toHaveBeenCalledWith("Test User", "test@email.com", "1234");
   });
 
   test("navigates to /login on successful signup", async () => {
