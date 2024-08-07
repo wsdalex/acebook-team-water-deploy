@@ -4,7 +4,6 @@ import sampleimage from "../../assets/image.png";
 import GlobalNavBar from "../../components/Post/GlobalNavBar";
 import "./FeedPage.css";
 
-
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 import Search from "../../components/Search/Search";

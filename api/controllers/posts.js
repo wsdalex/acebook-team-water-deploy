@@ -2,12 +2,17 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find().populate("user_id", "name email");
+
+  const posts = await Post.find()
+  .populate("user_id", "name email")
+  .populate("comments.user_id", "name email");
+
   const postsWithLikes = posts.map(post => ({
     ...post._doc, // spread operator to copy the post object - in mongoose the object is stored in _doc
     numberOfLikes: post.likes.length,
     isLikedByUser: post.likes.includes(req.user_id) // check if the user_id is in the likes array - will return true or false
   }));
+
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: postsWithLikes, token: token });
 };
@@ -25,13 +30,18 @@ const createPost = async (req, res) => {
 
 const getUserPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ user_id: req.user_id }).populate("user_id", "name email");
+
+    const posts = await Post.find({ user_id: req.user_id })
+    .populate("user_id", "name email")
+    .populate("comments.user_id", "name");
+
     const postsWithLikes = posts.map(post => ({
       ...post._doc,
       numberOfLikes: post.likes.length,
       isLikedByUser: post.likes.includes(req.user_id)
     }));
     res.status(200).json({posts: postsWithLikes});
+
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Error fetching the user's posts"})

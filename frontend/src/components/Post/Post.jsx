@@ -6,6 +6,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { likePost } from "../../services/posts";
 
+
 const Post = (props) => {
     const navigate = useNavigate();
     const [liked, setLiked] = useState(props.post.isLikedByUser);
@@ -29,10 +30,11 @@ const Post = (props) => {
         }
     };
 
+
     const userName = props.post.user_id.name;
     const formattedDate = moment(props.post.createdAt).fromNow();
     const image = props.post.imageUrl;
-
+    const comments = props.post.comments;
     return (
         <div className='d-flex justify-content-center'>
             <Toast style={{ width: "60%" }}>
@@ -64,9 +66,24 @@ const Post = (props) => {
                 </Toast.Body>
                 <br></br>
                 <Button onClick={handleAddComment}>Add a comment</Button>
+                          <br />
+          <br /> 
+          <div className="comments-section">
+            <h5>Comments</h5>
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <div key={comment._id} className="comment">
+                  <p><strong>{comment.user_id.name}</strong>: {comment.comment}</p>
+                  </div>
+              ))
+            ) : (
+              <p>No comments yet. Be the first to comment!</p>
+            )}
+          </div>
             </Toast>
         </div>
     );
-};
 
+};
+//line 37 is where comments added to post starts
 export default Post;

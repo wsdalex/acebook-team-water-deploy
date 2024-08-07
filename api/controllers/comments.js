@@ -15,8 +15,11 @@ const createComment = async (req, res) => {
   res.status(201).json({ message: "comment created", token: newToken });
 };
 
+
+
 const CommentController = {
   createComment: createComment,
+
 };
 
 module.exports = CommentController;
