@@ -1,7 +1,8 @@
+
 import Toast from "react-bootstrap/Toast";
 import moment from "moment";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { likePost } from "../../services/posts";
@@ -10,6 +11,7 @@ import "./Post.css";
 
 const Post = (props) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [liked, setLiked] = useState(props.post.isLikedByUser);
     const [numberOfLikes, setNumberOfLikes] = useState(
         props.post.numberOfLikes
@@ -30,7 +32,14 @@ const Post = (props) => {
             console.log(error);
         }
     };
-
+  
+    const handleEditPost = () => {
+      localStorage.setItem("post_id", props.post._id)
+      localStorage.setItem("message", props.post.message)
+      localStorage.setItem("imageUrl", props.post.imageUrl)
+      navigate(`/updatepost`)
+    };
+  
     const userName = props.post.user_id.name;
     const formattedDate = moment(props.post.createdAt).fromNow();
     const image = props.post.imageUrl;
@@ -66,6 +75,9 @@ const Post = (props) => {
             </Toast.Body>
               <br></br>
               <Button onClick={handleAddComment}>Add a comment</Button>
+              {location.pathname === "/profile" && (
+                          <Button onClick={handleEditPost}>Edit Post</Button>
+                        )}
               <br />
               <br /> 
       
@@ -100,6 +112,7 @@ const Post = (props) => {
         
         </div>
     );
+
 
 };
 

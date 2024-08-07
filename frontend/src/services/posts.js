@@ -40,7 +40,8 @@ export const createPost = async (token, message, imageUrl) => {
   return data;
 };
 
-export const getUserPosts = async (token) => { // readded token to be passed as an argument
+export const getUserPosts = async (token) => {
+  // readded token to be passed as an argument
   if (!token) {
     throw new Error("No token found");
   }
@@ -59,6 +60,29 @@ export const getUserPosts = async (token) => { // readded token to be passed as 
 
   const data = await response.json();
   return data.posts;
+};
+
+export const updatePost = async (token, message, imageUrl, post_id) => {
+  console.log("token being used ->", token);
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ message, imageUrl }),
+  };
+
+  const response = await fetch(
+    `${BACKEND_URL}/posts/${post_id}`,
+    requestOptions
+  );
+
+  if (response.status !== 200) {
+    throw new Error("Unable to update post");
+  }
+    const data = await response.json();
+  return data;
 };
 
 export const likePost = async (token, postId) => {
