@@ -62,7 +62,7 @@ const deletePost = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized" });
     }
     await Post.deleteOne({ _id: id }); // delete method changed to deleteOne and postToDelete changed from instance to model itself
-    return res.status(200).json({ message: "Post deleted" });
+    return res.status(204).json({ message: "Post deleted" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
