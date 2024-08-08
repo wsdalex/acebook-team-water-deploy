@@ -103,3 +103,28 @@ export const likePost = async (token, postId) => {
   const data = await response.json();
   return data;
 };
+
+export const deletePost = async (token, post_id) => {
+  console.log("token being used ->", token);
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  console.log("requestOptions defined");
+
+  const response = await fetch(
+    `${BACKEND_URL}/posts/${post_id}`,
+    requestOptions
+  );
+
+  console.log("fetch");
+
+  if (response.status !== 204) { // 204  = No Content
+    throw new Error("Unable to delete post");
+  }
+
+  return;
+};
