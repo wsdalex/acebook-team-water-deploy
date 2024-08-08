@@ -33,7 +33,7 @@ function GlobalNavBar(props) {
           </a>
         </div>
 
-        {/* conditional rendering - if isLoggedin is a truthy and the second part is also truthy then the second part after && gets returned. if isLoggedin isnt truthy then the second part (the buttons) is not shown   */}
+        {/* conditional rendering - if isLoggedin is a truthy and the second part is also truthy then the second part after && gets returned. if isLoggedin isnt truthy then the second part (the buttons) is not shown */}
           {isLoggedin && (
             <div className="navbar-right">
               <IconContext.Provider value={{ size: "23px", color: "white" }}>
