@@ -44,7 +44,7 @@ const Post = (props) => {
     const profileImage = props.post.user_id.profileImage
 
     return (
-        <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }}>
+        <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }} data-testid="post">
           <Toast style={{ width: "60%" }}>
             <Toast.Header>
               <img 
