@@ -1,4 +1,3 @@
-
 import Toast from "react-bootstrap/Toast";
 import moment from "moment";
 import Button from "react-bootstrap/Button";
@@ -13,9 +12,7 @@ const Post = (props) => {
     const navigate = useNavigate();
     const location = useLocation();
     const [liked, setLiked] = useState(props.post.isLikedByUser);
-    const [numberOfLikes, setNumberOfLikes] = useState(
-        props.post.numberOfLikes
-    );
+    const [numberOfLikes, setNumberOfLikes] = useState(props.post.numberOfLikes);
 
     const handleAddComment = () => {
         localStorage.setItem("post_id", props.post._id);
@@ -45,14 +42,15 @@ const Post = (props) => {
     const image = props.post.imageUrl;
     const comments = props.post.comments;
     const profileImage = props.post.user_id.profileImage
+
     return (
         <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }}>
           <Toast style={{ width: "60%" }}>
             <Toast.Header>
-              <img
-                src='holder.js/20x20?text=%20'
-                className='rounded me-2 profile-image"'
-                alt='Profile'
+              <img 
+                  src={profileImage ? profileImage : "holder.js/20x20?text=%20"} 
+                  className="rounded me-2 profile-image" 
+                  alt="Profile" 
               />
               <strong className='me-auto'>
                 {userName ? userName : ""}

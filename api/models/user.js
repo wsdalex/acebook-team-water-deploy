@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   name: String,
   email: { type: String, required: true, unique: true }, // added unique: true to make sure the email can only be used once
   password: { type: String, required: true },
+  profileImage: String,
 });
 
 UserSchema.pre('save', function(next) {

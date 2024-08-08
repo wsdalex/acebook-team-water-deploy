@@ -15,6 +15,9 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const { connectToDatabase } = require("./db");
 require("dotenv").config();
+const fs = require('fs');
+const path = require('path');
+const defaultProfileImage = fs.readFileSync(path.join(__dirname, 'defaultProfileImage.svg.png'), { encoding: 'base64' });
 
 const seedData = async () => {
   try {
@@ -28,11 +31,13 @@ const seedData = async () => {
       name: "Elon Musk",
       email: "elon@musk.com",
       password: "password123",
+      profileImage: `data:image/png;base64,${defaultProfileImage}`,
     });
     const user2 = await User.create({
       name: "Bill Gates",
       email: "bill@gates.com",
       password: "password456",
+      profileImage: `data:image/png;base64,${defaultProfileImage}`,
     });
 
     // Create posts

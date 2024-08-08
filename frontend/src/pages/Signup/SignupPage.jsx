@@ -19,8 +19,6 @@ export const SignupPage = () => {
     return emailPattern.test(email);
   };
 
-
-  
     const handleSubmit = async (event) => {
       event.preventDefault();
       setErrorMessage("") // clears error message at the start of operations so that no old error messages are shown - doesn't change anything for now but may be useful if more error messages are coming in from the backend
@@ -41,7 +39,6 @@ export const SignupPage = () => {
           // navigate("/signup");
           setErrorMessage(err.message)
         }
-
     }
   };
 
