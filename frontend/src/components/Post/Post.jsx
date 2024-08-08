@@ -45,7 +45,7 @@ const Post = (props) => {
 
     return (
         <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }}>
-          <Toast style={{ width: "60%" }}>
+          <Toast style={{ width: "60%", border: "1px solid black" }}>
             <Toast.Header>
               <img 
                   src={profileImage ? profileImage : "holder.js/20x20?text=%20"} 
@@ -63,13 +63,20 @@ const Post = (props) => {
                 <small>Posted {formattedDate}</small>
             </Toast.Header>
 
-            <Toast.Body>
-              <article key={props.post._id}>{props.post.message}</article>
+            <Toast.Body style={{ paddingBottom: image ? "0px" : "0px" }}>
+              <article 
+              style={{ textAlign: "left", paddingLeft: "55px", paddingRight: "55px"}} 
+              key={props.post._id}>{props.post.message}</article>
               <br></br>
-              <img
-                src={image ? image : props.filepath}
-                style={{width: "80%",}}
-              ></img>
+              
+                {image && (
+                  <img
+                      src={image}
+                      style={{ width: "80%" }}
+                      alt="Post"
+                  />
+              )}
+             
             </Toast.Body>
               <br></br>
               <Button onClick={handleAddComment}>Add a comment</Button>
