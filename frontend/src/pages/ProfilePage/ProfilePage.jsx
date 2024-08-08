@@ -5,6 +5,7 @@ import GlobalNavBar from "../../components/Post/GlobalNavBar";
 
 import { getUserPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
+import "./ProfilePage.css";
 
 export const ProfilePage = () => {
     const [posts, setPosts] = useState([]);
@@ -12,7 +13,9 @@ export const ProfilePage = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(`user -> ${JSON.stringify(user)}`);
     const user_name = user.name;
+    const profileImage = user.profileImage;
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -43,6 +46,9 @@ export const ProfilePage = () => {
         <>
         <GlobalNavBar user_name={user_name}></GlobalNavBar>
         <br></br>
+        <div className="profile-image-container">
+            <img src={profileImage} className="profile-page-image" alt="Profile"/>
+        </div>
         <div className="feed" role="feed">
             {posts && posts.length > 0 ? ( // added conditions to show message if no posts
                 posts.map((post) => (

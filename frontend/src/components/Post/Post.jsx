@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { likePost } from "../../services/posts";
+import { deletePost } from "../../services/posts";
 import Accordion from "react-bootstrap/Accordion";
 import "./Post.css";
 
@@ -36,6 +37,21 @@ const Post = (props) => {
       localStorage.setItem("imageUrl", props.post.imageUrl)
       navigate(`/updatepost`)
     };
+
+    const handleDeletePost = async () => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+      if (!confirmDelete) return; // exit if the user says no
+
+      try {
+        const token = localStorage.getItem("token");
+        await deletePost(token, props.post._id);
+        console.log("Post successfully deleted");
+        navigate("/profile"); // navigate to profile
+        window.location.reload();
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    };
   
     const userName = props.post.user_id.name;
     const formattedDate = moment(props.post.createdAt).fromNow();
@@ -46,6 +62,7 @@ const Post = (props) => {
     return (
         <div className='d-flex justify-content-center' style={{ marginBottom: "30px" }}>
           <Toast style={{ width: "60%", border: "1px solid black" }}>
+
             <Toast.Header>
               <img 
                   src={profileImage ? profileImage : "holder.js/20x20?text=%20"} 
@@ -79,10 +96,13 @@ const Post = (props) => {
              
             </Toast.Body>
               <br></br>
-              <Button onClick={handleAddComment}>Add a comment</Button>
+              <Button className="my-button" onClick={handleAddComment}>Add a comment</Button>
               {location.pathname === "/profile" && (
-                          <Button onClick={handleEditPost}>Edit Post</Button>
-                        )}
+                <>
+                  <Button className="my-button" onClick={handleEditPost}>Edit Post</Button>
+                  <Button className="my-button" variant="danger" onClick={handleDeletePost}>Delete Post</Button>
+                </>        
+              )}
               <br />
               <br /> 
       

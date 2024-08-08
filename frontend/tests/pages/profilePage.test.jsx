@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 import { ProfilePage } from "../../src/pages/ProfilePage/ProfilePage";
@@ -12,10 +12,16 @@ vi.mock("../../src/services/posts", () => ({
 
 // Mock the navigation
 const navigateMock = vi.fn();
-vi.mock("react-router-dom", () => ({
-    ...vi.importActual("react-router-dom"),
-    useNavigate: () => navigateMock,
-}));
+vi.mock("react-router-dom", async () => {
+    const actual = await vi.importActual("react-router-dom");
+    return {
+        ...actual,
+        useNavigate: () => navigateMock,
+        useLocation: () => ({
+            pathname: "/profile",
+        }),
+    };
+});
 
 // Mock the Post component
 vi.mock("../../components/Post/Post", () => ({
@@ -33,7 +39,7 @@ describe("Profile Page", () => {
         {
             _id: "12345",
             message: "Test User Post",
-            user_id: { _id: "userId", name: "Test User", email: "test@example.com" },
+            user_id: { _id: "userId", name: "Test User", email: "test@example.com", profileImage: "testProfileImage.jpg" },
             imageUrl: "testImage.jpg",
             comments: [],
             createdAt: new Date().toISOString(),
@@ -43,11 +49,11 @@ describe("Profile Page", () => {
 
     beforeEach(() => {
         localStorage.clear();
-        localStorage.setItem("user", JSON.stringify({ name: "Test User" }));
+        localStorage.setItem("user", JSON.stringify({ name: "Test User", profileImage: "testProfileImage.jpg" }));
         vi.clearAllMocks();
     });
 
-    test("It displays user posts from the backend", async () => {
+    test("It displays the user's profile image", async () => {
         localStorage.setItem("token", "testToken");
         getUserPosts.mockResolvedValue(mockPosts);
 
@@ -56,10 +62,36 @@ describe("Profile Page", () => {
         });
 
         await waitFor(() => {
+            // Check that the profile image is displayed correctly
+            const profileImages = screen.getAllByAltText("Profile");
+            expect(profileImages).toHaveLength(2);
+            expect(profileImages[0]).toHaveAttribute('src', 'testProfileImage.jpg');
+        });
+    });
+
+    test("It displays user posts from the backend", async () => {
+        localStorage.setItem("token", "testToken");
+        getUserPosts.mockResolvedValue(mockPosts);
+    
+        await act(async () => {
+            render(<ProfilePage />);
+        });
+    
+        await waitFor(() => {
             const post = screen.getByTestId("post");
-            expect(post).toHaveTextContent("Test User Post");
-            expect(post).toHaveTextContent("By: Test User");
-            expect(post.querySelector('img')).toHaveAttribute('src', 'testImage.jpg');
+            expect(post).toBeInTheDocument();
+            
+            const userName = within(post).getByText("Test User");
+            expect(userName).toBeInTheDocument();
+            
+            const postContent = within(post).getByText("Test User Post");
+            expect(postContent).toBeInTheDocument();
+            
+            const image = within(post).getByRole('img', { name: /profile/i });
+            expect(image).toHaveAttribute('src', 'testProfileImage.jpg');
+            
+            const postImage = within(post).getByRole('img', { name: '' });
+            expect(postImage).toHaveAttribute('src', 'testImage.jpg');
         });
     });
 
